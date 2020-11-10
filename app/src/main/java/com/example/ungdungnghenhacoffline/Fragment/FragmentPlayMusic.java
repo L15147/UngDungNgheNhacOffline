@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.example.ungdungnghenhacoffline.R;
@@ -30,7 +31,7 @@ public class FragmentPlayMusic extends Fragment {
         View view = inflater.inflate(R.layout.fragment_play_music, container, false);
         ImageView imgViewDisc = view.findViewById(R.id.imgViewDisc);
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotation);
-        animation.setRepeatCount(1000000);
+        animation.setInterpolator(new LinearInterpolator());
         imgViewDisc.startAnimation(animation);
         return view;
     }

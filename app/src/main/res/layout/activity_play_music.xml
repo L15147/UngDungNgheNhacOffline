@@ -47,69 +47,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTimeStart" />
 
     <ImageButton
-        android:id="@+id/imgButtonPause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
+        android:id="@+id/imgButtonRandom"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
 
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginBottom="36dp"
         android:background="@null"
-        android:src="@android:drawable/ic_media_pause"
+        android:src="@drawable/random4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgButtonPre" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/imgButtonPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginLeft="128dp"
         android:layout_marginBottom="36dp"
         android:background="@null"
         android:src="@android:drawable/ic_media_play"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgButtonPause" />
+        app:layout_constraintStart_toEndOf="@+id/imgButtonRandom" />
 
     <ImageButton
         android:id="@+id/imgButtonPre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginBottom="36dp"
         android:background="@null"
-        android:src="@android:drawable/ic_media_rew"
+        android:src="@android:drawable/ic_media_previous"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/imgButtonRandom" />
 
     <ImageButton
-        android:id="@+id/imgButtonFF"
+        android:id="@+id/imgButtonNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
         android:layout_marginLeft="52dp"
         android:layout_marginBottom="36dp"
         android:background="@null"
-        android:src="@android:drawable/ic_media_ff"
+        android:src="@android:drawable/ic_media_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgButtonPlay" />
 
     <ImageButton
         android:id="@+id/imgButtonReplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginBottom="40dp"
+        android:layout_width="29dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginBottom="36dp"
         android:background="@null"
-        android:src="@android:drawable/stat_notify_sync_noanim"
+        android:src="@drawable/repeat2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgButtonFF" />
+        app:layout_constraintStart_toEndOf="@+id/imgButtonNext" />
 
     <TextView
         android:id="@+id/tvTimeStart"
@@ -125,16 +126,16 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tvTimeEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="280dp"
-        android:layout_marginLeft="280dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="00:00"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/tvTimeStart"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
