@@ -7,13 +7,11 @@
     tools:context=".Fragment.FragmentLyric">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginLeft="116dp"
-        android:layout_marginTop="72dp"
-        android:text="Thai"
+        android:id="@+id/tvLyrics"
+        android:layout_width="match_parent"
+        android:layout_height="671dp"
+        android:layout_marginTop="56dp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

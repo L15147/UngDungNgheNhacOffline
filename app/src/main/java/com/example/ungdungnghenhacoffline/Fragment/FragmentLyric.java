@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.ungdungnghenhacoffline.R;
 
@@ -28,7 +29,8 @@ public class FragmentLyric extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lyric, container, false);
-
+        TextView tvLyrics = view.findViewById(R.id.tvLyrics);
+        tvLyrics.setText("Chưa có lời cho bài hát này");
         return view;
     }
 }

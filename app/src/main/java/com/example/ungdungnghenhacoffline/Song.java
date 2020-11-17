@@ -1,14 +1,26 @@
 package com.example.ungdungnghenhacoffline;
 
+import android.media.MediaPlayer;
+
 public class Song {
+    private  int imgSong;
     private String tenBaiHat;
     private int File;
     private String tenCaSy;
-
-    public Song(String tenBaiHat, int file, String tenCaSy) {
+    public static MediaPlayer mediaPlayer;
+    public Song(int imgSong, String tenBaiHat, int file, String tenCaSy) {
+        this.imgSong = imgSong;
         this.tenBaiHat = tenBaiHat;
         File = file;
         this.tenCaSy = tenCaSy;
+    }
+
+    public int getImgSong() {
+        return imgSong;
+    }
+
+    public void setImgSong(int imgSong) {
+        this.imgSong = imgSong;
     }
 
     public String getTenBaiHat() {

@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListNhacActivity">
+    tools:context=".ListNhacActivity"
+    android:background="#f3ecf2">
 
     <ListView
-        android:id="@+id/listSong"
+        android:id="@+id/lvSong"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
