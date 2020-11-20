@@ -73,24 +73,7 @@ public class ListNhacActivity extends AppCompatActivity {
         lvSong.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String tenBaiHat = songArrayList.get(position).getTenBaiHat();
-                String tenCasi = songArrayList.get(position).getTenCaSy();
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(ListNhacActivity.this
-                ).setSmallIcon(R.drawable.logo)
-                        .setContentTitle(tenBaiHat)
-                        .setContentText(tenCasi)
-                        .setAutoCancel(true);
-                Intent intent = new Intent(ListNhacActivity.this,PlayMusicActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("message",tenBaiHat);
 
-
-                PendingIntent pendingIntent = PendingIntent.getActivity(ListNhacActivity.this,
-                        0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-                builder.setContentIntent(pendingIntent);
-
-                NotificationManager notificationManager =(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(0,builder.build());
 
                 Intent intent1 = new Intent(ListNhacActivity.this, PlayMusicActivity.class);
                 Bundle bundle = new Bundle();

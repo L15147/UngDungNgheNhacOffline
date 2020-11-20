@@ -1,11 +1,18 @@
 package com.example.ungdungnghenhacoffline;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -26,6 +33,8 @@ import java.util.Random;
 import static com.example.ungdungnghenhacoffline.Song.mediaPlayer;
 
 public class PlayMusicActivity extends AppCompatActivity {
+    private static final String CHANNEL_ID = "aaa";
+    private static final int NOTIFICATION_ID = 001;
     ViewPager viewPager;
     TabLayout tabLayout;
     TextView tvTitle, tvTimeStart, tvTimeEnd, tvTenCasy, tvOpenPlayList;
@@ -318,13 +327,42 @@ public class PlayMusicActivity extends AppCompatActivity {
     public void khoiTaoMediaPlayer() {
 
         if (mediaPlayer == null)
-            mediaPlayer = MediaPlayer.create(this,songArrayList.get(i).getFile());
+            mediaPlayer = MediaPlayer.create(this, songArrayList.get(i).getFile());
         else {
             mediaPlayer.stop();
-            mediaPlayer = MediaPlayer.create(this,songArrayList.get(i).getFile());
+            mediaPlayer = MediaPlayer.create(this, songArrayList.get(i).getFile());
         }
         tvTitle.setText(songArrayList.get(i).getTenBaiHat());
         tvTenCasy.setText(songArrayList.get(i).getTenCaSy());
+        createNotificationChannels();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+        String tenBaiHat = songArrayList.get(i).getTenCaSy();
+        String tenCaSy = songArrayList.get(i).getTenBaiHat();
+        builder.setContentText(tenBaiHat);
+        builder.setContentTitle(tenCaSy);
+        builder.setSmallIcon(R.drawable.logo2);
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(tenBaiHat));
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//        builder.addAction(R.drawable.previous,"Previous",null)
+//                .addAction(R.drawable.pause,"Pause",null)
+//                .addAction(R.drawable.next,"Next",null)
+//                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+//                        .setShowActionsInCompactView(1,2,3));
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+    }
+
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     public void setTvTimeEnd() {
