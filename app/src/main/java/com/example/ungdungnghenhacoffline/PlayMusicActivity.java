@@ -6,11 +6,14 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +27,8 @@ import android.widget.TextView;
 import com.example.ungdungnghenhacoffline.Adapter.ViewPagerAdapter;
 import com.example.ungdungnghenhacoffline.Fragment.FragmentLyric;
 import com.example.ungdungnghenhacoffline.Fragment.FragmentPlayMusic;
+import com.example.ungdungnghenhacoffline.CreateNotification;
+import com.example.ungdungnghenhacoffline.Service.OnClearFromRecentService;
 import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
@@ -32,8 +37,8 @@ import java.util.Random;
 
 import static com.example.ungdungnghenhacoffline.Song.mediaPlayer;
 
-public class PlayMusicActivity extends AppCompatActivity {
-    private static final String CHANNEL_ID = "aaa";
+public class PlayMusicActivity extends AppCompatActivity implements Playable  {
+    private static final String CHANNEL_ID = "My channel";
     private static final int NOTIFICATION_ID = 001;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -45,6 +50,8 @@ public class PlayMusicActivity extends AppCompatActivity {
     int i;
     boolean random = false;
     boolean repeat = false;
+    NotificationManager notificationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,11 @@ public class PlayMusicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play_music);
         setTitle("Dream Music");
         anhXa();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChanel();
+            registerReceiver(broadcastReceiver, new IntentFilter("SONGS_SONGS"));
+            startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+        }
         this.addTab(viewPager);
         intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
@@ -274,6 +286,161 @@ public class PlayMusicActivity extends AppCompatActivity {
         tvOpenPlayList = findViewById(R.id.tvOpenPlayList);
     }
 
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getExtras().getString("actionname");
+            switch (action) {
+                case CreateNotification.ACTION_PREVIOUS:
+                    onSongPrevious();
+                    break;
+                case CreateNotification.ACTION_PLAY:
+
+                    onSongPlay();
+
+                    break;
+                case CreateNotification.ACTION_NEXT:
+                    onSongNext();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    public void onSongPrevious() {
+        if (repeat == true) {
+            i -= 0;
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            khoiTaoMediaPlayer();
+            mediaPlayer.start();
+            setTvTimeEnd();
+            updateTimeSong();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        } else if (random == true) {
+            Random random = new Random();
+            int index = random.nextInt(songArrayList.size());
+            i = index;
+            if (i < 0) {
+                i = songArrayList.size() - 1;
+            }
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            khoiTaoMediaPlayer();
+            mediaPlayer.start();
+            setTvTimeEnd();
+            updateTimeSong();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        } else if (repeat == false) {
+            i--;
+            if (i < 0) {
+                i = songArrayList.size() - 1;
+            }
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            khoiTaoMediaPlayer();
+            mediaPlayer.start();
+            setTvTimeEnd();
+            updateTimeSong();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        } else if (random == false) {
+            i--;
+            if (i < 0) {
+                i = songArrayList.size() - 1;
+            }
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            khoiTaoMediaPlayer();
+            mediaPlayer.start();
+            setTvTimeEnd();
+            updateTimeSong();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        }
+    }
+
+    @Override
+    public void onSongPlay() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_play);
+        } else {
+            mediaPlayer.start();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        }
+        setTvTimeEnd();
+        updateTimeSong();
+    }
+
+
+    @Override
+    public void onSongNext() {
+        if (repeat == true) {
+            i += 0;
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            khoiTaoMediaPlayer();
+            mediaPlayer.start();
+            setTvTimeEnd();
+            updateTimeSong();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        } else if (random == true) {
+            Random random = new Random();
+            int index = random.nextInt(songArrayList.size());
+            i = index;
+            if (i > songArrayList.size() - 1) {
+                i = 0;
+            }
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            khoiTaoMediaPlayer();
+            mediaPlayer.start();
+            setTvTimeEnd();
+            updateTimeSong();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        } else if (repeat == false) {
+            i++;
+            if (i > songArrayList.size() - 1) {
+                i = 0;
+            }
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            khoiTaoMediaPlayer();
+            mediaPlayer.start();
+            setTvTimeEnd();
+            updateTimeSong();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        } else if (random == false) {
+            i++;
+            if (i > songArrayList.size() - 1) {
+                i = 0;
+            }
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            khoiTaoMediaPlayer();
+            mediaPlayer.start();
+            setTvTimeEnd();
+            updateTimeSong();
+            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.cancelAll();
+        }
+        unregisterReceiver(broadcastReceiver);
+    }
+
     private void addTab(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new FragmentPlayMusic());
@@ -334,34 +501,18 @@ public class PlayMusicActivity extends AppCompatActivity {
         }
         tvTitle.setText(songArrayList.get(i).getTenBaiHat());
         tvTenCasy.setText(songArrayList.get(i).getTenCaSy());
-        createNotificationChannels();
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
-        String tenBaiHat = songArrayList.get(i).getTenCaSy();
-        String tenCaSy = songArrayList.get(i).getTenBaiHat();
-        builder.setContentText(tenBaiHat);
-        builder.setContentTitle(tenCaSy);
-        builder.setSmallIcon(R.drawable.logo2);
-        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(tenBaiHat));
-        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//        builder.addAction(R.drawable.previous,"Previous",null)
-//                .addAction(R.drawable.pause,"Pause",null)
-//                .addAction(R.drawable.next,"Next",null)
-//                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-//                        .setShowActionsInCompactView(1,2,3));
+        CreateNotification.createNotification(PlayMusicActivity.this, songArrayList.get(i), R.drawable.play, i, songArrayList.size() - 1);
 
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
     }
 
-    private void createNotificationChannels() {
+
+    private void createChanel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.createNotificationChannel(channel);
+            NotificationChannel channel = new NotificationChannel(CreateNotification.CHANNEL_ID, "Dream Music", NotificationManager.IMPORTANCE_LOW);
+            notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
     }
 
