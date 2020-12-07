@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.ungdungnghenhacoffline">
+    package="vn.poly.ungdungnghenhacoffline">
 
     <application
         android:allowBackup="true"
@@ -20,8 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListNhacActivity"></activity>
-        <receiver android:name=".Service.NotificationActionService"/>
-        <service android:name=".Service.OnClearFromRecentService"/>
+        <receiver android:name=".service.NotificationActionService"/>
+        <service android:name=".service.OnClearFromRecentService"/>
     </application>
 
 </manifest>

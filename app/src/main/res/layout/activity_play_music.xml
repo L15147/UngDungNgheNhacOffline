@@ -16,31 +16,10 @@
         android:padding="5dp"
         android:text="Ten bai hat"
         android:textColor="#fff"
-        android:textSize="24dp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="425dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCaSy">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.viewpager.widget.ViewPager>
-    </LinearLayout>
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -55,8 +34,8 @@
         android:id="@+id/imgButtonPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="21dp"
         android:background="@null"
         android:src="@android:drawable/ic_media_play"
@@ -67,8 +46,8 @@
         android:id="@+id/imgButtonNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="21dp"
         android:background="@null"
         android:src="@android:drawable/ic_media_next"
@@ -79,8 +58,8 @@
         android:id="@+id/imgButtonRepeat"
         android:layout_width="29dp"
         android:layout_height="32dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginLeft="41dp"
         android:layout_marginTop="21dp"
         android:background="@null"
         android:src="@drawable/repeat2"
@@ -103,8 +82,8 @@
         android:id="@+id/imgButtonPre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="21dp"
         android:background="@null"
         android:src="@android:drawable/ic_media_previous"
@@ -117,25 +96,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="428dp"
         android:text="00:00"
         android:textColor="@color/cardview_light_background"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCaSy" />
 
     <TextView
         android:id="@+id/tvTimeEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginTop="428dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="00:00"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCaSy" />
 
     <TextView
         android:id="@+id/tvCaSy"
@@ -144,33 +123,44 @@
         android:gravity="center"
         android:text="Tên ca sỹ"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <ImageButton
         android:id="@+id/imgButtonListNhac"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="42dp"
         android:src="@drawable/playlist_24px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvOpenPlayList" />
+        app:layout_constraintStart_toEndOf="@+id/tvOpenPlayList"
+        app:layout_constraintTop_toBottomOf="@+id/imgButtonRepeat" />
 
     <TextView
         android:id="@+id/tvOpenPlayList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="271dp"
-        android:layout_marginLeft="271dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginLeft="252dp"
+        android:layout_marginTop="48dp"
         android:text="PlayList"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgButtonNext" />
+
+    <ImageView
+        android:id="@+id/imgViewDisc"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/jack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCaSy" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
