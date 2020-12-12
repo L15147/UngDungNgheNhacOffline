@@ -23,6 +23,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import vn.poly.ungdungnghenhacoffline.service.OnClearFromRecentService;
+
 import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
@@ -31,21 +32,20 @@ import java.util.Random;
 
 import static vn.poly.ungdungnghenhacoffline.Song.mediaPlayer;
 
-public class PlayMusicActivity extends AppCompatActivity implements Playable  {
+public class PlayMusicActivity extends AppCompatActivity implements Playable {
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
     TextView tvTitle, tvTimeStart, tvTimeEnd, tvTenCasy, tvOpenPlayList;
     SeekBar seekBar;
     ImageButton imgButtonPre, imgButtonPlay, imgButtonNext, imgButtonRepeat, imgButtonRandom, imgButtonPlayList;
     ArrayList<Song> songArrayList;
     ImageView imageViewDisc;
     Intent intent;
-    int i;
+    static int i;
     boolean random = false;
     boolean repeat = false;
     NotificationManager notificationManager;
     ObjectAnimator animation;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +58,14 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
             registerReceiver(broadcastReceiver, new IntentFilter("SONGS_SONGS"));
             startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
         }
-        //this.addTab(viewPager);
         intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("bundle");
+        bundle = intent.getBundleExtra("bundle");
         i = bundle.getInt("stt");
         animation = ObjectAnimator.ofFloat(imageViewDisc, "rotation", 0, 360);
         animation.setDuration(10000);
         animation.setRepeatCount(Animation.INFINITE);
         animation.setRepeatMode(ObjectAnimator.RESTART);
         animation.setInterpolator(new LinearInterpolator());
-
-        //tabLayout.setupWithViewPager(viewPager);
         addSong();
         khoiTaoMediaPlayer();
         setTvTimeEnd();
@@ -96,6 +93,8 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
             public void onClick(View v) {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
+//                    CreateNotification.drw_play = R.drawable.play;
+                    //CreateNotification.createNotification(PlayMusicActivity.this, songArrayList.get(i), R.drawable.play, i, songArrayList.size() - 1);
                     imgButtonPlay.setImageResource(android.R.drawable.ic_media_play);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         animation.pause();
@@ -103,6 +102,8 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
 
                 } else {
                     mediaPlayer.start();
+                    //CreateNotification.drw_play = R.drawable.pause;
+                    //CreateNotification.createNotification(PlayMusicActivity.this, songArrayList.get(i), R.drawable.play, i, songArrayList.size() - 1);
                     imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         animation.resume();
@@ -172,58 +173,18 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
         imgButtonPre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (repeat == true) {
-                    i -= 0;
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                    }
-                    khoiTaoMediaPlayer();
-                    mediaPlayer.start();
-                    setTvTimeEnd();
-                    updateTimeSong();
-                    imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
-                } else if (random == true) {
-                    Random random = new Random();
-                    int index = random.nextInt(songArrayList.size());
-                    i = index;
-                    if (i < 0) {
-                        i = songArrayList.size() - 1;
-                    }
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                    }
-                    khoiTaoMediaPlayer();
-                    mediaPlayer.start();
-                    setTvTimeEnd();
-                    updateTimeSong();
-                    imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
-                } else if (repeat == false) {
-                    i--;
-                    if (i < 0) {
-                        i = songArrayList.size() - 1;
-                    }
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                    }
-                    khoiTaoMediaPlayer();
-                    mediaPlayer.start();
-                    setTvTimeEnd();
-                    updateTimeSong();
-                    imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
-                } else if (random == false) {
-                    i--;
-                    if (i < 0) {
-                        i = songArrayList.size() - 1;
-                    }
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                    }
-                    khoiTaoMediaPlayer();
-                    mediaPlayer.start();
-                    setTvTimeEnd();
-                    updateTimeSong();
-                    imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+                i--;
+                if (i < 0) {
+                    i = songArrayList.size() - 1;
                 }
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                }
+                khoiTaoMediaPlayer();
+                mediaPlayer.start();
+                setTvTimeEnd();
+                updateTimeSong();
+                imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
             }
         });
         imgButtonRepeat.setOnClickListener(new View.OnClickListener() {
@@ -301,8 +262,12 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
                     onSongPrevious();
                     break;
                 case CreateNotification.ACTION_PLAY:
+                    if (mediaPlayer.isPlaying()) {
+                        onSongPause();
+                    } else {
+                        onSongPlay();
+                    }
 
-                    onSongPlay();
 
                     break;
                 case CreateNotification.ACTION_NEXT:
@@ -314,78 +279,47 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
 
     @Override
     public void onSongPrevious() {
-        if (repeat == true) {
-            i -= 0;
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
-            khoiTaoMediaPlayer();
-            mediaPlayer.start();
-            setTvTimeEnd();
-            updateTimeSong();
-            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
-        } else if (random == true) {
-            Random random = new Random();
-            int index = random.nextInt(songArrayList.size());
-            i = index;
-            if (i < 0) {
-                i = songArrayList.size() - 1;
-            }
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
-            khoiTaoMediaPlayer();
-            mediaPlayer.start();
-            setTvTimeEnd();
-            updateTimeSong();
-            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
-        } else if (repeat == false) {
-            i--;
-            if (i < 0) {
-                i = songArrayList.size() - 1;
-            }
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
-            khoiTaoMediaPlayer();
-            mediaPlayer.start();
-            setTvTimeEnd();
-            updateTimeSong();
-            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
-        } else if (random == false) {
-            i--;
-            if (i < 0) {
-                i = songArrayList.size() - 1;
-            }
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
-            khoiTaoMediaPlayer();
-            mediaPlayer.start();
-            setTvTimeEnd();
-            updateTimeSong();
-            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        i--;
+        if (i < 0) {
+            i = songArrayList.size() - 1;
+
         }
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
+        khoiTaoMediaPlayer();
+        mediaPlayer.start();
+        setTvTimeEnd();
+        updateTimeSong();
+        imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+
     }
 
     @Override
     public void onSongPlay() {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            imgButtonPlay.setImageResource(android.R.drawable.ic_media_play);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                animation.pause();
-            }
-        } else {
-            mediaPlayer.start();
-            imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                animation.resume();
-            }
+        mediaPlayer.start();
+        imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+        //CreateNotification.drw_play = R.drawable.pause;
+        CreateNotification.createNotification(PlayMusicActivity.this, songArrayList.get(i), R.drawable.pause, i, songArrayList.size() - 1);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            animation.resume();
         }
+
         setTvTimeEnd();
         updateTimeSong();
+        //CreateNotification.createNotification(PlayMusicActivity.this, songArrayList.get(i), R.drawable.pause, i, songArrayList.size()-1);
+        imgButtonPlay.setImageResource(android.R.drawable.ic_media_pause);
+    }
+
+    @Override
+    public void onSongPause() {
+        mediaPlayer.pause();
+        imgButtonPlay.setImageResource(android.R.drawable.ic_media_play);
+        //CreateNotification.drw_play = R.drawable.play;
+        CreateNotification.createNotification(PlayMusicActivity.this, songArrayList.get(i), R.drawable.play, i, songArrayList.size() - 1);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            animation.pause();
+        }
     }
 
 
@@ -455,14 +389,16 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
         unregisterReceiver(broadcastReceiver);
     }
 
-
-
     private void addSong() {
         songArrayList = new ArrayList<>();
         songArrayList.add(new Song(R.drawable.onlyc, "Anh không đòi quà", R.raw.anh_khong_doi_qua, "OnlyC ft Karik"));
         songArrayList.add(new Song(R.drawable.karik, "Anh là sinh viên", R.raw.anh_la_sinh_vien, "Karik"));
         songArrayList.add(new Song(R.drawable.denvau, "Anh đếch cần gì nhiều ngoài em", R.raw.anhdechcanginhieungoaiem, "Đen"));
         songArrayList.add(new Song(R.drawable.jack, "Bạc phận", R.raw.bacphan1, "Jack"));
+        songArrayList.add(new Song(R.drawable.bainaychillphet, "Bài này chill phết", R.raw.bai_nay_chill_phet, "Đen ft Min"));
+        songArrayList.add(new Song(R.drawable.baytynguoi, "7 tỷ người", R.raw.baytynguoi1, "Lynk Lee"));
+        songArrayList.add(new Song(R.drawable.bigcitiboi, "Bigcityboi", R.raw.bigcityboi, "Binz"));
+        songArrayList.add(new Song(R.drawable.buonthicukhocdi, "Buồn thì cứ khóc đi", R.raw.buonthicukhocdi1, "Lynk Lee"));
 
     }
 
@@ -481,7 +417,6 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
         CreateNotification.createNotification(PlayMusicActivity.this, songArrayList.get(i), R.drawable.play, i, songArrayList.size() - 1);
         animation.start();
     }
-
 
     private void createChanel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -568,5 +503,4 @@ public class PlayMusicActivity extends AppCompatActivity implements Playable  {
             }
         }, 100);
     }
-
 }

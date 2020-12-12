@@ -28,7 +28,10 @@ public class ListNhacActivity extends AppCompatActivity {
         songArrayList.add(new Song(R.drawable.karik, "Anh là sinh viên", R.raw.anh_la_sinh_vien, "Karik"));
         songArrayList.add(new Song(R.drawable.denvau, "Anh đếch cần gì nhiều ngoài em", R.raw.anhdechcanginhieungoaiem, "Đen"));
         songArrayList.add(new Song(R.drawable.jack, "Bạc phận", R.raw.bacphan1, "Jack"));
-
+        songArrayList.add(new Song(R.drawable.bainaychillphet, "Bài này chill phết", R.raw.bai_nay_chill_phet, "Đen ft Min"));
+        songArrayList.add(new Song(R.drawable.baytynguoi, "7 tỷ người", R.raw.baytynguoi1, "Lynk Lee"));
+        songArrayList.add(new Song(R.drawable.bigcitiboi, "Bigcityboi", R.raw.bigcityboi, "Binz"));
+        songArrayList.add(new Song(R.drawable.buonthicukhocdi, "Buồn thì cứ khóc đi", R.raw.buonthicukhocdi1, "Lynk Lee"));
         SongAdapter adapter = new SongAdapter(songArrayList);
         lvSong.setAdapter(adapter);
         lvSong.setOnItemClickListener(new AdapterView.OnItemClickListener() {
