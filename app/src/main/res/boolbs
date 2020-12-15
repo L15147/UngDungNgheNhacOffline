@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen_margin_left_divider">88dp</dimen>
+    <dimen name="top_sheet_modal_elevation">16dp</dimen>
+    <dimen name="top_margin">8dp</dimen>
+    <dimen name="top_sheet_modal_peek_height">256dp</dimen>
+    <dimen name="margin_top_change_info_edittext_to_textview">16dp</dimen>
+
+    <dimen name="margin_xxxlarge">32dp</dimen>
+    <dimen name="margin_xlarge">24dp</dimen>
+    <dimen name="margin_large">20dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_small">12dp</dimen>
+    <dimen name="margin_tiny">8dp</dimen>
+    <dimen name="margin_small_tiny">6dp</dimen>
+
+    <dimen name="text_size_xlarge">20sp</dimen>
+    <dimen name="text_size_large">17sp</dimen>
+    <dimen name="text_size_normal">15sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+
+    <!--default-->
+    <dimen name="_4dp">4dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_16dp">16dp</dimen>
+    <dimen name="_12dp">12dp</dimen>
+    <dimen name="_24dp">24dp</dimen>
+    <dimen name="_42dp">42dp</dimen>
+    <dimen name="_2dp">2dp</dimen>
+    <dimen name="_80dp">80dp</dimen>
+    <dimen name="_150dp">150dp</dimen>
+
+
+</resources>
